@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test de Reflexión Cognitiva</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #f4f4f4;
+      color: #333;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 30px;
+      border: 1px solid #ccc;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      font-weight: normal;
+    }
+    .question {
+      margin-bottom: 30px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+    }
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    button:hover {
+      background-color: #1a242f;
+    }
+    .hidden {
+      display: none;
+    }
+    #result p {
+      font-size: 18px;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Test de Reflexión Cognitiva</h1>
+  <form id="quizForm">
+    <div class="question">
+      <label>1. Un bate y una pelota cuestan $1.10 en total. El bate cuesta $1.00 más que la pelota. ¿Cuánto cuesta la pelota?</label>
+      <input type="text" name="q1" required placeholder="Ej. 0.05">
+    </div>
+
+    <div class="question">
+      <label>2. En un estanque hay una alga que se duplica cada día. Si tarda 48 días en cubrir todo el estanque, ¿en cuántos días cubrirá la mitad?</label>
+      <input type="number" name="q2" required placeholder="Ej. 47">
+    </div>
+
+    <div class="question">
+      <label>3. Si 5 máquinas tardan 5 minutos en hacer 5 artículos, ¿cuánto tiempo tardarán 100 máquinas en hacer 100 artículos?</label>
+      <input type="number" name="q3" required placeholder="Ej. 5">
+    </div>
+
+    <button type="submit">Ver resultado</button>
+  </form>
+
+  <div id="result" class="hidden">
+    <h2>Resultado</h2>
+    <p id="feedback"></p>
+    <button onclick="location.reload()">Intentar de nuevo</button>
+  </div>
+
+  <script>
+    const form = document.getElementById("quizForm");
+    const result = document.getElementById("result");
+    const feedback = document.getElementById("feedback");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const q1 = parseFloat(form.q1.value.replace(',', '.'));
+      const q2 = parseInt(form.q2.value);
+      const q3 = parseInt(form.q3.value);
+
+      let score = 0;
+      if (Math.abs(q1 - 0.05) < 0.01) score++;
+      if (q2 === 47) score++;
+      if (q3 === 5) score++;
+
+      form.classList.add("hidden");
+      result.classList.remove("hidden");
+
+      let message = "";
+      switch(score) {
+        case 3:
+          message = "<strong>Excelente:</strong> Tienes un pensamiento altamente reflexivo y analítico. Razonas más allá de las intuiciones inmediatas.";
+          break;
+        case 2:
+          message = "<strong>Muy bien:</strong> Demuestras una buena capacidad de razonamiento lógico. Solo un pequeño ajuste y estarás en la cima.";
+          break;
+        case 1:
+          message = "<strong>Regular:</strong> Tus respuestas muestran intuición, pero podrías beneficiarte al cuestionar un poco más tus primeras impresiones.";
+          break;
+        default:
+          message = "<strong>Interesante:</strong> Tus respuestas fueron intuitivas pero incorrectas. Prueba a analizar con más calma y profundidad la próxima vez.";
+      }
+
+      feedback.innerHTML = message;
+    });
+  </script>
+</body>
+</html>
